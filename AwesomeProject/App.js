@@ -48,9 +48,9 @@ const FirstActivity_StackNavigator = createStackNavigator({
       title: 'Pill App',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
-        backgroundColor: '#FF9800',
+        backgroundColor: '#d5e0f2',
       },
-      headerTintColor: '#fff',
+      headerTintColor: '#000',
     }),
   },
 });
@@ -66,9 +66,9 @@ const Screen2_StackNavigator = createStackNavigator({
       title: 'Home',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
-        backgroundColor: '#FF9800',
+        backgroundColor: '#d5e0f2',
       },
-      headerTintColor: '#fff',
+      headerTintColor: '#000',
     }),
   },
 });
@@ -84,9 +84,9 @@ const Screen3_StackNavigator = createStackNavigator({
       title: 'Add Pills',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
-        backgroundColor: '#FF9800',
+        backgroundColor: '#d5e0f2',
       },
-      headerTintColor: '#fff',
+      headerTintColor: '#000',
     }),
   },
 });
