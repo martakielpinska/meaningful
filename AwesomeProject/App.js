@@ -11,7 +11,6 @@ import {
   createStackNavigator,
   createAppContainer,
 } from 'react-navigation';
- 
 import Screen1 from './pages/Screen1';
 import Screen2 from './pages/Screen2';
 import Screen3 from './pages/Screen3';
@@ -23,8 +22,9 @@ class NavigationDrawerStructure extends Component {
     this.props.navigationProps.toggleDrawer();
   };
   render() {
+    console.log(this.props)
     return (
-      <View style={{ flexDirection: 'row' }}>
+      <View style={[{ flexDirection: 'row' }, this.props.navigationProps.state.routeName == "First"? {display: 'none'}: {}]}>
         <TouchableOpacity onPress={this.toggleDrawer.bind(this)}>
           {/*Donute Button Image */}
           <Image
@@ -45,7 +45,7 @@ const FirstActivity_StackNavigator = createStackNavigator({
   First: {
     screen: Screen1,
     navigationOptions: ({ navigation }) => ({
-      title: 'Demo Screen 1',
+      title: 'Pill App',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#FF9800',
@@ -63,7 +63,7 @@ const Screen2_StackNavigator = createStackNavigator({
   Second: {
     screen: Screen2,
     navigationOptions: ({ navigation }) => ({
-      title: 'Demo Screen 2',
+      title: 'Home',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#FF9800',
@@ -81,7 +81,7 @@ const Screen3_StackNavigator = createStackNavigator({
   Third: {
     screen: Screen3,
     navigationOptions: ({ navigation }) => ({
-      title: 'Demo Screen 3',
+      title: 'Add Pills',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#FF9800',
@@ -100,21 +100,21 @@ const DrawerNavigatorExample = createDrawerNavigator({
     //Title
     screen: FirstActivity_StackNavigator,
     navigationOptions: {
-      drawerLabel: 'Demo Screen 1',
+      drawerLabel: 'PillApp',
     },
   },
   Screen2: {
     //Title
     screen: Screen2_StackNavigator,
     navigationOptions: {
-      drawerLabel: 'Demo Screen 2',
+      drawerLabel: 'Home',
     },
   },
   Screen3: {
     //Title
     screen: Screen3_StackNavigator,
     navigationOptions: {
-      drawerLabel: 'Demo Screen 3',
+      drawerLabel: 'AddPills',
     },
   },
 });
