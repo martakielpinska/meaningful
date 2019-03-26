@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "54736378019",
+    "firebase_url": "https://custommap-b442d.firebaseio.com",
+    "project_id": "custommap-b442d",
+    "storage_bucket": "custommap-b442d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54736378019:android:6601b037e8d162d1",
+        "android_client_info": {
+          "package_name": "com.demoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54736378019-sa0pn7rq9lcloe2rcr8ni8jopnbhfknl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC66AvPiIUScAWsZ6_baks631OMsX-XUu4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:54736378019:android:fea177c05ab2ec86",
+        "android_client_info": {
+          "package_name": "com.x.copleybros"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "54736378019-sa0pn7rq9lcloe2rcr8ni8jopnbhfknl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC66AvPiIUScAWsZ6_baks631OMsX-XUu4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
