@@ -89,7 +89,8 @@ const Screen3_StackNavigator = createStackNavigator({
       headerTintColor: '#000',
     }),
   },
-});
+  
+}, { enableKeyboardAvoiding: true });
  
 //For React Navigation 2.+ need to use DrawerNavigator instead createDrawerNavigator
 //const DrawerNavigatorExample = DrawerNavigator({

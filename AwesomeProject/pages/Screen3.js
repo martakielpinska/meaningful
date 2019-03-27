@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, TextInput , Button, TouchableHighlight, Image, AsyncStorage, ScrollView} from 'react-native';
+import { StyleSheet, View, Text, TextInput , Button, TouchableHighlight, KeyboardAvoidingView,
+  Image, AsyncStorage, ScrollView, findNodeHandle, UIManager, TextInputState} from 'react-native';
 import moment from 'moment'
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
+import {Header} from 'react-navigation'
+
 
  
+
+
 export default class Screen3 extends Component {
   
 constructor() {
@@ -15,6 +19,8 @@ constructor() {
     };
     //if error is saying this.smth is undefined u have to bind "this"
     // this._updates = this._updates.bind(this)
+    this._textInput1 = null
+    this._textInput2 = null
 }
 _storeData = async () => {
   try {
@@ -48,19 +54,30 @@ componentDidMount = async () => {
     }
   }
 
+  scrollTo = (element) => {
+    // const { State: TextInputState } = TextInput;
+    // const currentlyFocusedField = TextInputState.currentlyFocusedField();
+    // UIManager.measure(currentlyFocusedField , (originX, originY, width, height, pageX, pageY) => {
+    //   console.log(originX, originY, width, height, pageX, pageY);
+    //   this._scrollView.scrollTo({x: pageX, y: pageY+150, animated: true})
+    // });
+  }
+
+
+
   makeTextInput = (expr) => {
 
     let inputName = null
 
     switch (expr) {
       case 'MondayMorning':
-      inputName = (<TextInput placeholder="ADD PILL NAME" placeholderTextColor="#9b9b9b" style={styles.textInput}  multiline = {false} onChangeText={(monMor) => this.setState({monMor})}  value={this.state.monMor}/>     )
+      inputName = (<TextInput ref={(ref)=> this._textInput1 = ref }placeholder="ADD PILL NAME" placeholderTextColor="#9b9b9b" style={styles.textInput}  multiline = {false} onChangeText={(monMor) => this.setState({monMor})}  value={this.state.monMor}/>     )
       break;
       case 'MondayAfternoon':
-      inputName = (<TextInput placeholder="ADD PILL NAME" placeholderTextColor="#9b9b9b" style={styles.textInput}  multiline = {false} onChangeText={(monAft) => this.setState({monAft})}  value={this.state.monAft}/>     )
+      inputName = (<TextInput ref={(ref)=> this._textInput2 = ref } placeholder="ADD PILL NAME" placeholderTextColor="#9b9b9b" style={styles.textInput}  multiline = {false} onChangeText={(monAft) => this.setState({monAft})}  value={this.state.monAft}/>     )
       break;
       case 'MondayEvening':
-      inputName = (<TextInput placeholder="ADD PILL NAME" placeholderTextColor="#9b9b9b" style={styles.textInput}  multiline = {false} onChangeText={(monEv) => this.setState({monEv})}  value={this.state.monEv}/>     )
+      inputName = (<TextInput  onFocus={()=>this.scrollTo(this.textInput1)} placeholder="ADD PILL NAME" placeholderTextColor="#9b9b9b" style={styles.textInput}  multiline = {false} onChangeText={(monEv) => this.setState({monEv})}  value={this.state.monEv}/>     )
       break;
 
       case 'TuesdayMorning':
@@ -172,11 +189,23 @@ componentDidMount = async () => {
    
 
     return (
-      <View style={styles.MainContainer}>
-      <KeyboardAwareScrollView style={{width: "100%", height:"100%"}}>
+
+      
+
+      <KeyboardAvoidingView
+      keyboardVerticalOffset = {Header.HEIGHT + 20} // adjust the value here if you need more padding
+      style = {{ flex: 1 }}
+      behavior = "padding" >
+       <ScrollView keyboardDismissMode="interactive"
+                                 keyboardShouldPersistTaps="always"
+                                 getTextInputRefs={() => {
+                                   return [this._textInput1, this._textInput2];
+                                 }}
+                                  ref={(ref)=> this._scrollView = ref } style={{flex: 1}}>
       {content}
-      </KeyboardAwareScrollView>
-      </View>
+      </ScrollView>
+      </KeyboardAvoidingView>
+      
     );
   }
 }
