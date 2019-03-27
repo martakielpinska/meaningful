@@ -49,9 +49,47 @@ componentDidMount = async () => {
     const data = await this._retrieveData()
     if(typeof data !== 'undefined'){
       
-      this.setState({data : makeArrayWithData(data)})
+      this.setState({data : makeArrayWithData(data) , data2 : data})
       
     }
+  }
+  deletePill = async (index, day, time) => {
+    try {
+      console.log("HERE")
+      console.log(this.state.data2[day][time].pills)
+      let updatedPills = this.state.data2[day][time].pills.split(",")
+      delete updatedPills[index]
+      let pillsString = ""
+      let counter = 0
+      updatedPills.forEach(el=>{
+        pillsString += counter == 0 ? el : (","+el)
+        counter++
+      })
+      let updatedData = this.state.data2
+      updatedData[day][time].pills = pillsString
+      console.log(updatedData)
+      await AsyncStorage.setItem('PILLS', JSON.stringify(updatedData));
+      this.componentDidMount()
+    } catch (error) {
+      // Error saving data
+    }
+  }
+
+   pillRow = (arr, day, time) => { 
+    return arr.split(",").map((i, index)=>{
+      return (
+        <View key={i} style={styles.pillRow}>
+            <Image source={require("../image/pill.png")} style={styles.pill}/>
+            <View style={styles.pillRow2}>
+            <Text style={styles.pillText} >{i.replace(" ", "")}</Text>
+            <TouchableHighlight style={styles.fullWidthButton} onPress={()=>this.deletePill(index, day, time)}>
+              <Text style={styles.fullWidthButtonText} > DELETE </Text>
+            </TouchableHighlight>
+            </View>
+            
+        </View>
+      ) 
+     })
   }
 
   scrollTo = (element) => {
@@ -149,19 +187,19 @@ componentDidMount = async () => {
     return ( 
       <View>
         <Text style={styles.pillTime}> Pills Morning </Text>
-        {pillRow(day.pillsMorning)}
+        {this.pillRow(day.pillsMorning, day.dayName, "Morning")}
         <View style={styles.plusRow}>
           <Image source={require("../image/plus.png")} style={styles.plus}/>
           {this.makeTextInput(day.dayName+"Morning")}
         </View>
          <Text  style={styles.pillTime}> Pills Afternoon </Text>
-        {pillRow(day.pillsAfternoon)}
+        {this.pillRow(day.pillsAfternoon, day.dayName, "Afternoon")}
         <View style={styles.plusRow}>
           <Image source={require("../image/plus.png")} style={styles.plus}/>
           {this.makeTextInput(day.dayName+"Afternoon")}
         </View>
         <Text  style={styles.pillTime}> Pills Evening </Text>
-        {pillRow(day.pillsEvening)}
+        {this.pillRow(day.pillsEvening, day.dayName, "Evening")}
         <View style={styles.plusRow}>
           <Image source={require("../image/plus.png")} style={styles.plus}/>
           {this.makeTextInput(day.dayName+"Evening")}
@@ -259,22 +297,7 @@ function makeArrayWithData(data) {
 
 
 
-function pillRow(arr) { 
-  return arr.split(",").map((i)=>{
-    return (
-      <View key={i} style={styles.pillRow}>
-          <Image source={require("../image/pill.png")} style={styles.pill}/>
-          <View style={styles.pillRow2}>
-          <Text style={styles.pillText} >{i.replace(" ", "")}</Text>
-          <TouchableHighlight style={styles.fullWidthButton}>
-            <Text style={styles.fullWidthButtonText} > DELETE </Text>
-          </TouchableHighlight>
-          </View>
-          
-      </View>
-    ) 
-   })
-}
+
  
 const styles = StyleSheet.create({
   textInput: {
