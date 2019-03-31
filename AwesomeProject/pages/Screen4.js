@@ -1,10 +1,10 @@
 //This is an example code for NavigationDrawer//
 import React, { Component } from 'react';
 //import react in our code.
-import { StyleSheet, View, Text, TextInput , Button, TouchableHighlight, AsyncStorage ,  Image} from 'react-native';
+import { StyleSheet, View, Text, TextInput , Button, TouchableHighlight, AsyncStorage ,  Image, ScrollView} from 'react-native';
 // import all basic components
 import logo from '../image/logoTEC.png'
-import graph from '../image/GRAPH.png'
+import graph from '../image/graph2.png'
 
 import moment from 'moment'
 export default class Screen4 extends Component {
@@ -56,11 +56,24 @@ _retrieveData = async () => {
   render() {
     return (
       <View style={styles.MainContainer}>
-          <Image source={graph} style={{ height: 200, width: "100%", marginBottom: 15}} resizeMode={"contain"}/>
-          <Text style={styles.bigText }>YOU FORGET MOST PILLS IN THE MORNING</Text>
-          <Text style={styles.smallText }>Pills forgotten this week <Text style={[styles.smallText , {color: 'red', fontWeight: 'bold'}]}>{this.state.pillsForgottenWeek}</Text></Text>
-          <Text style={styles.smallText }>Pills forgotten this month <Text style={[styles.smallText , {color: 'red', fontWeight: 'bold'}]}>{this.state.pillsForgottenMonth}</Text></Text>
-          <Text style={styles.smallText }>Pills forgotten this year <Text style={[styles.smallText , {color: 'red', fontWeight: 'bold'}]}>{this.state.pillsForgottenYear}</Text></Text>
+       <ScrollView 
+                keyboardDismissMode="interactive"
+                keyboardShouldPersistTaps="always"
+                getTextInputRefs={() => {
+                return [this._textInput1, this._textInput2];
+                }}
+                ref={(ref)=> this._scrollView = ref } style={{flex: 1}}>
+          <Image source={graph} style={{ height: 300, width: "100%"}} resizeMode={"stretch"}/>
+          <View style={{justifyContent: "center", alignItems: "center", backgroundColor: "#ce3a45", width: "100%"}}>
+            <Text style={styles.bigText }>YOU FORGET MOST PILLS IN THE MORNING</Text>
+          </View>
+           <Text style={[styles.smallText , {color: 'red', fontWeight: 'bold', marginTop: 13, marginBottom: 7 }]}>{this.state.pillsForgottenWeek}</Text>
+          <Text style={styles.smallText }>PILLS FORGOTTEN THIS WEEK</Text>
+          <Text style={[styles.smallText , {color: 'red', fontWeight: 'bold', marginTop: 13, marginBottom: 7}]}>{this.state.pillsForgottenMonth}</Text>
+          <Text style={styles.smallText }>PILLS FORGOTTEN THIS MONTH </Text>
+          <Text style={[styles.smallText , {color: 'red', fontWeight: 'bold', marginTop: 13, marginBottom: 7}]}>{this.state.pillsForgottenYear}</Text>
+          <Text style={styles.smallText }>PILLS FORGOTTEN THIS YEAR </Text>
+          </ScrollView>
       </View>
     );
   }
@@ -69,30 +82,26 @@ _retrieveData = async () => {
 const styles = StyleSheet.create({
   MainContainer: {
     flex: 1,
-    paddingTop: 20,
-    alignItems: 'center',
-    marginTop: 50,
-    justifyContent: 'flex-start',
-
   },
   bigText:{
       fontSize: 29,
       width: "100%",
       textAlign : "center",
-      marginBottom: 20,
       paddingLeft: 15,
       paddingRight: 15,
-      fontFamily : "sans-serif-light"
+      paddingTop: 15,
+      paddingBottom: 15,
+      fontFamily : "sans-serif-light",
+      color: 'white'
   },
   smallText:{
-      fontSize: 25,
+      fontSize: 22,
       width: "100%",
-      textAlign : "left",
+      textAlign : "center",
       paddingLeft:15,
+      paddingRight: 15,
       marginBottom: 10,
       fontFamily : "sans-serif-light"
-      
-      
   },
   textInput: {
       width: "80%",

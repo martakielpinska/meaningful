@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, TextInput , Button, TouchableHighlight, Image, AsyncStorage, ScrollView} from 'react-native';
 import moment from 'moment'
 // import all basic components
-
+import {Font} from 'expo'
 
 export default class Screen2 extends Component {
 
@@ -70,12 +70,15 @@ constructor() {
   };
 
   componentDidMount = async () => {
+
     //   alert(moment().format("YYYY-MM-DD HH:mm"))
         const send = this._storeData()
         const send2 = this._storeForgottenPills()
         const send3 = this._storeTasks()
-      const data = await this._retrieveData()
-      if(typeof data !== 'undefined'){
+        
+        const data = await this._retrieveData()
+        
+        if(typeof data !== 'undefined'){
         this.setState({
             data: data,
         }, () => { 
@@ -99,19 +102,40 @@ constructor() {
   
           if(now.isBefore(morning)){
               dayState = "morning"
-  
+
+              tasksMorning = []
+              tasksAft = []
+              tasksEv = []
+
+              tasks.forEach(el=>{
+                  el.tasks.forEach(task=>{
+                      if(task.timeName == "morning"){
+                          tasksMorning = [...tasksMorning, {...task, el: el.name}]
+                      }
+                      else if(task.timeName == "afternoon"){
+                          tasksAft = [...tasksAft, {...task, el: el.name}]
+                      }
+                      else {
+                          tasksEv = [...tasksEv, {...task, el: el.name}]
+                      }
+                  })
+              })
              arr = [
                  {
                      name: "morning",
-                     ...dayData["Morning"]
+                     ...dayData["Morning"],
+                     tasks: tasksMorning
+
                  },
                  {
                      name: "afternoon",
-                     ...dayData["Afternoon"]
+                     ...dayData["Afternoon"],
+                     tasks: tasksAft
                  },
                  {
                      name: "evening",
-                     ...dayData["Evening"]
+                     ...dayData["Evening"],
+                     tasks: tasksEv
                  }
              ]
           }
@@ -120,11 +144,13 @@ constructor() {
               arr = [
                   {
                       name: "afternoon",
-                      ...dayData["Afternoon"]
+                      ...dayData["Afternoon"],
+                      tasks: tasksAft
                   },
                   {
                       name: "evening",
-                      ...dayData["Evening"]
+                      ...dayData["Evening"],
+                      tasks: tasksEv
                   }
               ]
           }
@@ -133,7 +159,8 @@ constructor() {
               arr = [
                   {
                       name: "evening",
-                      ...dayData["Evening"]
+                      ...dayData["Evening"],
+                      tasks: tasksEv
                   }
               ]
           } else{
@@ -171,7 +198,6 @@ constructor() {
 
     let counter = 0   
     if(this.state.filteredData){
-        nextTime = this.state.filteredData[0].name == "morning" ? "8:00" : (this.state.filteredData[0].name == "afternoon" ? "15:00" : "22:00") 
         content = this.state.filteredData.map((i) => {                     
             // Return the element. Also pass key   
             counter++
@@ -182,10 +208,18 @@ constructor() {
                          return (
                             <View key={i} style={styles.pillRow}>
                                 <Image source={require("../image/pill.png")} style={styles.pill}/>
-                                <Text style={styles.pillText} >{i.replace(" ", "")}</Text>
+                                <Text style={styles.pillText} >PILL : {i.replace(" ", "")}</Text>
                             </View>
                         ) 
                     }) }
+                    {i.tasks.map(task=>{
+                        return (
+                            <View key={task.name} style={styles.pillRow}>
+                                <Image source={task.el=="Gardening" ? require("../image/003-sprout.png") : task.el == "Shopping" ? require('../image/001-shopping-basket.png') : require('../image/002-cutlery.png')} style={styles.pill}/>                            
+                                <Text style={styles.pillText}>{task.el.toUpperCase()} {task.name.toUpperCase()} </Text>
+                            </View>
+                        )
+                    })}
                 </View>
             // <Text key={i}>{i}</Text>
             ) 
@@ -216,8 +250,6 @@ constructor() {
  
 const styles = StyleSheet.create({
   MainContainer: {
-    
-    paddingTop: 20,
     alignItems: 'center',
     marginTop: 10,
     justifyContent: 'flex-start',
@@ -225,7 +257,8 @@ const styles = StyleSheet.create({
     
   },
   pillRow:{
-    flexDirection: "row", justifyContent: "flex-start", marginTop:13
+    flexDirection: "row", justifyContent: "flex-start", alignItems: "center", height: 55,
+    backgroundColor: "white", borderWidth:0.5, borderColor: "#bde0d2"
   },
   pill:{
     width:30, 
@@ -233,15 +266,16 @@ const styles = StyleSheet.create({
     marginLeft:15
   },
   pillText:{
-      fontSize: 25,
+      fontSize: 22,
       marginLeft: 15,
-
   },
   nextText:{
     width: "100%",
     textAlign: "left",
     paddingLeft: 15,
-    fontSize: 20,
+    fontSize: 18,
+    fontFamily : "sans-serif-light",
+    color: '#191919',
   },
   bigNext:{
       width: "100%",
@@ -250,8 +284,12 @@ const styles = StyleSheet.create({
   },
   nextName:{
     width: "100%",
-    textAlign: "center",
-    fontSize: 32
+    textAlign: "left",
+    paddingLeft: 15,
+    fontSize: 32,
+    fontFamily : "custom",
+    color: '#1f7c4e'
+    
 },
   fullWidthButton: {
     backgroundColor: '#4286f4',
@@ -360,26 +398,26 @@ const tasks = [
     {
         name: "Eating",
         tasks: [
-            {time: "9:00" , name: "breakfast"},
-            {time: "12:00" , name: "lunch"},
-            {time: "17:00" , name: "dinner"},
-            {time: "20:00" , name: "supper"},
+            {time: "9:00" , name: "breakfast", timeName: "morning"},
+            {time: "12:00" , name: "lunch", timeName: "afternoon"},
+            {time: "17:00" , name: "dinner", timeName : "afternoon"},
+            {time: "20:00" , name: "supper", timeName: "evening"},
             
         ]
     },
     {
         name: "Shopping",
         tasks:[
-            {time: "Monday", name: "Groceries"},
-            {time: "Thursday" , name: "Groceries"},
+            {time: "Wednesday", name: "Groceries",  timeName: "morning"},
+            {time: "Wednesday" , name: "House Supplies",  timeName: "morning"},
         ]
 
     },
     {
         name: "Gardening",
         tasks:[
-            {time: "Monday", name: "Water the garden"},
-            {time: "Monday", name: "Water the house plants"}
+            {time: "Wednesday", name: "garden",  timeName: "morning"},
+            {time: "Wednesday", name: "house ",  timeName: "morning"}
         ]
     }
 ]

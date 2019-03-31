@@ -16,13 +16,20 @@ import Screen2 from './pages/Screen2';
 import Screen3 from './pages/Screen3';
 import Screen4 from './pages/Screen4';
 import Screen5 from './pages/Screen5';
- 
+ import {Font} from 'expo'
 class NavigationDrawerStructure extends Component {
   //Structure for the navigatin Drawer
   toggleDrawer = () => {
     //Props to open/close the drawer
     this.props.navigationProps.toggleDrawer();
   };
+
+  componentDidMount = async () => {
+    
+    Font.loadAsync({
+      'custom': require('./image/Bungee-Regular.otf'),
+    });
+  }
   render() {
     console.log(this.props)
     return (
@@ -86,7 +93,7 @@ const Screen3_StackNavigator = createStackNavigator({
   Third: {
     screen: Screen3,
     navigationOptions: ({ navigation }) => ({
-      title: 'Add Pills',
+      title: 'My Medications',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#1f7c4e',
@@ -119,7 +126,7 @@ const Screen5_StackNavigator = createStackNavigator({
   Fourth: {
     screen: Screen5,
     navigationOptions: ({ navigation }) => ({
-      title: 'Add Task',
+      title: 'My Tasks',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
         backgroundColor: '#1f7c4e',
@@ -147,28 +154,28 @@ const DrawerNavigatorExample = createDrawerNavigator({
     //Title
     screen: Screen2_StackNavigator,
     navigationOptions: {
-      drawerLabel: 'Home',
+      drawerLabel: 'My Day',
     },
   },
   Screen3: {
     //Title
     screen: Screen3_StackNavigator,
     navigationOptions: {
-      drawerLabel: 'AddPills',
+      drawerLabel: 'My Medications',
     },
   },
     Screen4: {
       //Title
-      screen: Screen4_StackNavigator,
-      navigationOptions: {
-        drawerLabel: 'Memory Monitor',
-      }
-  },
-  Screen5: {
-    //Title
     screen: Screen5_StackNavigator,
     navigationOptions: {
-      drawerLabel: 'Add Task',
+      drawerLabel: 'My Task',
+    }
+  },
+  Screen5: {
+   
+    screen: Screen4_StackNavigator,
+    navigationOptions: {
+      drawerLabel: 'Memory Monitor',
     }
 }
 });

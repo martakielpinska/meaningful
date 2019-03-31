@@ -393,13 +393,17 @@ const styles = StyleSheet.create({
   pillTime:{
     fontSize: 24,
     marginTop: 9,
-    paddingLeft: 15
+    paddingLeft: 15,
+    fontFamily: "custom",
+    color: '#1f7c4e'
   },
   dayName:{
     fontSize: 35,
     textTransform : 'capitalize',
     paddingLeft: 15,
     marginTop: 17,
+    fontFamily: "custom",
+    color: "#191919"
     
   },  
   pillRow:{
