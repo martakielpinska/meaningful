@@ -24,8 +24,34 @@ constructor() {
   _storeData = async () => {
     try {
       await AsyncStorage.setItem('PILLS', JSON.stringify(pillData));
+      
     } catch (error) {
       // Error saving data
+    }
+  };
+
+  _storeForgottenPills = async () => {
+    try {
+
+        console.log("STORING")
+      await AsyncStorage.setItem('PILLSFORGOTTEN', JSON.stringify(forgottenPills));
+      
+    } catch (error) {
+      // Error saving data
+      console.log(error)
+      
+    }
+  };
+
+  _storeTasks = async () => {
+    try {
+
+      await AsyncStorage.setItem('TASKS', JSON.stringify(tasks));
+      
+    } catch (error) {
+      // Error saving data
+      console.log(error)
+      
     }
   };
 
@@ -46,6 +72,8 @@ constructor() {
   componentDidMount = async () => {
     //   alert(moment().format("YYYY-MM-DD HH:mm"))
         const send = this._storeData()
+        const send2 = this._storeForgottenPills()
+        const send3 = this._storeTasks()
       const data = await this._retrieveData()
       if(typeof data !== 'undefined'){
         this.setState({
@@ -320,3 +348,38 @@ const pillData = {
         }
     }
 }
+
+const forgottenPills = [
+    { time : "morning" , date: "2019-01-12" },
+    { time: "morning" , date : "2019-03-30"},
+    { time: "evening" , date : "2019-03-28"}
+    
+]
+
+const tasks = [
+    {
+        name: "Eating",
+        tasks: [
+            {time: "9:00" , name: "breakfast"},
+            {time: "12:00" , name: "lunch"},
+            {time: "17:00" , name: "dinner"},
+            {time: "20:00" , name: "supper"},
+            
+        ]
+    },
+    {
+        name: "Shopping",
+        tasks:[
+            {time: "Monday", name: "Groceries"},
+            {time: "Thursday" , name: "Groceries"},
+        ]
+
+    },
+    {
+        name: "Gardening",
+        tasks:[
+            {time: "Monday", name: "Water the garden"},
+            {time: "Monday", name: "Water the house plants"}
+        ]
+    }
+]

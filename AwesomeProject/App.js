@@ -14,6 +14,8 @@ import {
 import Screen1 from './pages/Screen1';
 import Screen2 from './pages/Screen2';
 import Screen3 from './pages/Screen3';
+import Screen4 from './pages/Screen4';
+import Screen5 from './pages/Screen5';
  
 class NavigationDrawerStructure extends Component {
   //Structure for the navigatin Drawer
@@ -29,7 +31,7 @@ class NavigationDrawerStructure extends Component {
           {/*Donute Button Image */}
           <Image
             source={require('./image/drawer.png')}
-            style={{ width: 25, height: 25, marginLeft: 5 }}
+            style={{ width: 25, height: 25, marginLeft: 15 }}
           />
         </TouchableOpacity>
       </View>
@@ -45,12 +47,14 @@ const FirstActivity_StackNavigator = createStackNavigator({
   First: {
     screen: Screen1,
     navigationOptions: ({ navigation }) => ({
-      title: 'Pill App',
+      title: 'APP NAME',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
-        backgroundColor: '#d5e0f2',
+        backgroundColor: '#1f7c4e',
+        fontFamily : "sans-serif-light",
+        display:'none'
       },
-      headerTintColor: '#000',
+      headerTintColor: '#fff',
     }),
   },
 });
@@ -66,9 +70,10 @@ const Screen2_StackNavigator = createStackNavigator({
       title: 'Home',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
-        backgroundColor: '#d5e0f2',
+        backgroundColor: '#1f7c4e',
+        fontFamily : "sans-serif-light",
       },
-      headerTintColor: '#000',
+      headerTintColor: '#fff',
     }),
   },
 });
@@ -84,9 +89,43 @@ const Screen3_StackNavigator = createStackNavigator({
       title: 'Add Pills',
       headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
       headerStyle: {
-        backgroundColor: '#d5e0f2',
+        backgroundColor: '#1f7c4e',
+        fontFamily : "sans-serif-light",
       },
-      headerTintColor: '#000',
+      headerTintColor: '#fff',
+    }),
+  },
+  
+}, { enableKeyboardAvoiding: true });
+
+const Screen4_StackNavigator = createStackNavigator({
+  //All the screen from the Screen3 will be indexed here
+  Fourth: {
+    screen: Screen4,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Memory Monitor',
+      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+      headerStyle: {
+        backgroundColor: '#1f7c4e',
+        fontFamily : "sans-serif-light",
+      },
+      headerTintColor: '#fff',
+    }),
+  },
+  
+}, { enableKeyboardAvoiding: true });
+const Screen5_StackNavigator = createStackNavigator({
+  //All the screen from the Screen3 will be indexed here
+  Fourth: {
+    screen: Screen5,
+    navigationOptions: ({ navigation }) => ({
+      title: 'Add Task',
+      headerLeft: <NavigationDrawerStructure navigationProps={navigation} />,
+      headerStyle: {
+        backgroundColor: '#1f7c4e',
+        fontFamily : "sans-serif-light",
+      },
+      headerTintColor: '#fff',
     }),
   },
   
@@ -101,7 +140,7 @@ const DrawerNavigatorExample = createDrawerNavigator({
     //Title
     screen: FirstActivity_StackNavigator,
     navigationOptions: {
-      drawerLabel: 'PillApp',
+      drawerLabel: 'APP NAME',
     },
   },
   Screen2: {
@@ -118,6 +157,20 @@ const DrawerNavigatorExample = createDrawerNavigator({
       drawerLabel: 'AddPills',
     },
   },
+    Screen4: {
+      //Title
+      screen: Screen4_StackNavigator,
+      navigationOptions: {
+        drawerLabel: 'Memory Monitor',
+      }
+  },
+  Screen5: {
+    //Title
+    screen: Screen5_StackNavigator,
+    navigationOptions: {
+      drawerLabel: 'Add Task',
+    }
+}
 });
  
 //For React Navigation 2.+ need to export App only
