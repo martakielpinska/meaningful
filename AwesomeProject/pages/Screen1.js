@@ -55,7 +55,7 @@ _keyboardDidHide () {
       <TouchableHighlight style={styles.fullWidthButton} onPress={()=> this.props.navigation.navigate("Second")}>
              <Text style={styles.fullWidthButtonText}>SUBMIT</Text>
       </TouchableHighlight>
-      <Text style={styles.txtx}>No account yet? Sign In!</Text>
+      <Text style={styles.txtx}>No account yet? Sign Up!</Text>
     </View>
     )
 
